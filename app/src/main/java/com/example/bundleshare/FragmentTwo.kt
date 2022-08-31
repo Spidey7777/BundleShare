@@ -21,10 +21,16 @@ class FragmentTwo : Fragment() {
 
         val fragmentOne = FragmentOne()
 
+        var s = ""
         val bundle = this.arguments
-        Log.i("lol", "bundle: $bundle")
         if (bundle != null) {
-            binding.tv.text = bundle.get("key").toString()
+
+            val ss = bundle.getParcelableArrayList<Records>("key")
+            ss?.forEach {
+                s += it.record_id
+            }
+
+            binding.tv.text = s
         }
 
         binding.backButton.setOnClickListener {
@@ -34,33 +40,6 @@ class FragmentTwo : Fragment() {
             }
         }
 
-//        var bundle = Bundle()
-//        GlobalScope.launch {
-//            bundle = getArgs()
-//            Log.i("lol", "bundle2: $bundle")
-//        }
-//
-//        binding.tv.text = bundle.get("key").toString()
-//        Log.i("lol", "bundle3: $bundle")
-//
-//        binding.backButton.setOnClickListener {
-//            parentFragmentManager.beginTransaction().apply {
-//                replace(R.id.fragment_holder, fragmentOne)
-//                commit()
-//            }
-//        }
-//
-//        return binding.root
-//    }
-//
-//    private suspend fun getArgs() : Bundle {
-//        var bundle1: Bundle
-//        withContext(Dispatchers.Default) {
-//            bundle1 = this@FragmentTwo.requireArguments()
-//            Log.i("lol", "bundle1: $bundle1")
-//        }
-//        return bundle1
-//    }
         return binding.root
     }
 }
